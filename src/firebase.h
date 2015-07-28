@@ -1,7 +1,7 @@
-#ifndef QTFIREBASE_FIREBASE_H
-#define QTFIREBASE_FIREBASE_H
+#ifndef CUTEFIRE_FIREBASE_H
+#define CUTEFIRE_FIREBASE_H
 
-#include "qt-firebase.h"
+#include "cutefire.h"
 #include <QObject>
 #include <QUrl>
 #include <QVariant>
@@ -9,12 +9,12 @@
 class QNetworkAccessManager;
 class QNetworkReply;
 
-namespace QtFirebase
+namespace CuteFire
 {
     class FirebasePrivate;
     class Query;
 
-    class QTFIREBASE_API Firebase : public QObject
+    class CUTEFIRE_API Firebase : public QObject
     {
         Q_OBJECT
     public:
@@ -76,4 +76,4 @@ namespace QtFirebase
     };
 }
 
-#endif // QTFIREBASE_FIREBASE_H
+#endif // CUTEFIRE_FIREBASE_H

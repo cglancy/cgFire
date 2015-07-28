@@ -1,5 +1,5 @@
-#ifndef QTFIREBASE_EVENTSOURCE_H
-#define QTFIREBASE_EVENTSOURCE_H
+#ifndef CUTEFIRE_EVENTSOURCE_H
+#define CUTEFIRE_EVENTSOURCE_H
 
 #include <QObject>
 #include <QUrl>
@@ -10,7 +10,7 @@ class QString;
 class QVariant;
 class QNetworkAccessManager;
 
-namespace QtFirebase
+namespace CuteFire
 {
 
     class EventSource : public QObject
@@ -60,4 +60,4 @@ namespace QtFirebase
 
 }
 
-#endif // QTFIREBASE_EVENTSOURCE_H
+#endif // CUTEFIRE_EVENTSOURCE_H

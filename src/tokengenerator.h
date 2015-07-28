@@ -1,15 +1,15 @@
-#ifndef QTFIREBASE_TOKENGENERATOR_H
-#define QTFIREBASE_TOKENGENERATOR_H
+#ifndef CUTEFIRE_TOKENGENERATOR_H
+#define CUTEFIRE_TOKENGENERATOR_H
 
-#include "qt-firebase.h"
+#include "cutefire.h"
 #include <QByteArray>
 #include <QVariant>
 
-namespace QtFirebase
+namespace CuteFire
 {
     class TokenGeneratorPrivate;
 
-    class QTFIREBASE_API TokenGenerator
+    class CUTEFIRE_API TokenGenerator
     {
     public:
         TokenGenerator(const QByteArray &secret);
@@ -27,4 +27,4 @@ namespace QtFirebase
     };
 }
 
-#endif // QTFIREBASE_TOKENGENERATOR_H
+#endif // CUTEFIRE_TOKENGENERATOR_H

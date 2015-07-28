@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QMessageAuthenticationCode>
 
-namespace QtFirebase
+namespace CuteFire
 {
 
 TokenGenerator::TokenGenerator(const QByteArray &secret)

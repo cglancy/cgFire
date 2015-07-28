@@ -9,7 +9,7 @@
 #include <QJsonDocument>
 #include <QUrlQuery>
 
-namespace QtFirebase
+namespace CuteFire
 {
 
 Query::Query(Firebase *parent)

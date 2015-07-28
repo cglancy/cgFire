@@ -1,10 +1,10 @@
-#ifndef QTFIREBASE_QUERY_P_H
-#define QTFIREBASE_QUERY_P_H
+#ifndef CUTEFIRE_QUERY_P_H
+#define CUTEFIRE_QUERY_P_H
 
 #include <QObject>
 #include <QUrl>
 
-namespace QtFirebase
+namespace CuteFire
 {
     class Firebase;
     class Query;
@@ -68,4 +68,4 @@ namespace QtFirebase
     };
 }
 
-#endif // QTFIREBASE_QUERY_P_H
+#endif // CUTEFIRE_QUERY_P_H

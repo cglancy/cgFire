@@ -7,18 +7,18 @@ CONFIG   += testcase
 TEMPLATE = app
 
 SOURCES += \
-    qtfirebase_test.cpp
+    cutefire_test.cpp
 
 HEADERS += \
-    qtfirebase_test.h
+    cutefire_test.h
 
 INCLUDEPATH += ../src
 
 CONFIG(debug, debug|release) {
-    LIBS += -L../src/debug -lQtFirebase0
-    PRE_TARGETDEPS += ../src/debug/QtFirebase0.dll
+    LIBS += -L../src/debug -lCuteFire0
+    PRE_TARGETDEPS += ../src/debug/CuteFire0.dll
 }
 else {
-    LIBS += -L../src/release -lQtFirebase0
-    PRE_TARGETDEPS += ../src/release/QtFirebase0.dll
+    LIBS += -L../src/release -lCuteFire0
+    PRE_TARGETDEPS += ../src/release/CuteFire0.dll
 }

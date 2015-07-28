@@ -1,4 +1,4 @@
-#include "qtfirebase_test.h"
+#include "cutefire_test.h"
 #include <firebase.h>
 #include <query.h>
 #include <tokengenerator.h>
@@ -10,12 +10,12 @@
 
 #define WEATHER_URL "https://publicdata-weather.firebaseio.com"
 
-using namespace QtFirebase;
+using namespace CuteFire;
 
 
-QTEST_MAIN(QtFirebaseTest)
+QTEST_MAIN(CuteFireTest)
 
-void QtFirebaseTest::initTestCase()
+void CuteFireTest::initTestCase()
 {
     // verify environment variables
     QByteArray firebaseUrlStr = qgetenv("FIREBASE_URL");
@@ -28,7 +28,7 @@ void QtFirebaseTest::initTestCase()
     QVERIFY(!firebaseSecret.isEmpty());
 }
 
-void QtFirebaseTest::testAccessors()
+void CuteFireTest::testAccessors()
 {
     QString urlStr = QString(WEATHER_URL) + "/portland";
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(urlStr)));
@@ -37,7 +37,7 @@ void QtFirebaseTest::testAccessors()
     QVERIFY(testRef->key() == "portland");
 }
 
-void QtFirebaseTest::testReferences()
+void CuteFireTest::testReferences()
 {
     QString urlStr = QString(WEATHER_URL) + "/portland";
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(urlStr)));
@@ -56,7 +56,7 @@ void QtFirebaseTest::testReferences()
     QVERIFY(child->url().toString() == urlStr + "/currently");
 }
 
-void QtFirebaseTest::testRead()
+void CuteFireTest::testRead()
 {
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(WEATHER_URL)));
     Firebase *temp = testRef->child("portland/currently/temperature");
@@ -70,7 +70,7 @@ void QtFirebaseTest::testRead()
     qDebug() << "Temperature in Portland is " << arguments.at(0).toString();
 }
 
-void QtFirebaseTest::testTokenGenerator()
+void CuteFireTest::testTokenGenerator()
 {
     TokenGenerator tokenGenerator(firebaseSecret);
 
@@ -94,7 +94,7 @@ void QtFirebaseTest::testTokenGenerator()
     QVERIFY(payload["debug"] == true);
 }
 
-void QtFirebaseTest::testAuth()
+void CuteFireTest::testAuth()
 {
     QVariantMap data;
     data["uid"] = "custom:1";
@@ -121,7 +121,7 @@ void QtFirebaseTest::testAuth()
     testRef->unauth();
 }
 
-void QtFirebaseTest::testSetAndOnce()
+void CuteFireTest::testSetAndOnce()
 {
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
     Firebase *testRef = rootRef->child("test");
@@ -151,11 +151,11 @@ void QtFirebaseTest::testSetAndOnce()
     QVERIFY(arguments.at(0).toBool() == true);
 }
 
-void QtFirebaseTest::testQuery()
+void CuteFireTest::testQuery()
 {
 }
 
-void QtFirebaseTest::testListen()
+void CuteFireTest::testListen()
 {
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
     Firebase *testRef = rootRef->child("test");

@@ -10,7 +10,7 @@
 #include <QBuffer>
 #include <QUrlQuery>
 
-namespace QtFirebase {
+namespace CuteFire {
 
 QNetworkAccessManager * Firebase::networkAccessManager()
 {

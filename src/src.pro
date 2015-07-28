@@ -7,7 +7,7 @@
 QT       += core network
 QT       -= gui
 
-TARGET = QtFirebase
+TARGET = CuteFire
 CONFIG   += dll
 TEMPLATE = lib
 VERSION	= 0.1.1
@@ -25,7 +25,7 @@ HEADERS += \
     eventsource.h \
     tokengenerator.h \
     tokengenerator_p.h \
-    qt-firebase.h
+    cutefire.h
 
-DEFINES += QTFIREBASE_EXPORTS
+DEFINES += CUTEFIRE_EXPORTS
 

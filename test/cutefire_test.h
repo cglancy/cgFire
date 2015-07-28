@@ -1,11 +1,11 @@
-#ifndef QTFIREBASE_TEST_H
-#define QTFIREBASE_TEST_H
+#ifndef CUTEFIRE_TEST_H
+#define CUTEFIRE_TEST_H
 
 #include <QObject>
 #include <QByteArray>
 #include <QUrl>
 
-class QtFirebaseTest : public QObject
+class CuteFireTest : public QObject
 {
     Q_OBJECT
 private slots:
@@ -25,4 +25,4 @@ private:
     QByteArray firebaseSecret;
 };
 
-#endif // QTFIREBASE_TEST_H
+#endif // CUTEFIRE_TEST_H

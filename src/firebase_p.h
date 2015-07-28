@@ -1,12 +1,12 @@
-#ifndef QTFIREBASE_FIREBASE_P_H
-#define QTFIREBASE_FIREBASE_P_H
+#ifndef CUTEFIRE_FIREBASE_P_H
+#define CUTEFIRE_FIREBASE_P_H
 
 #include <QObject>
 #include <QUrl>
 
 class QNetworkAccessManager;
 
-namespace QtFirebase
+namespace CuteFire
 {
     class Firebase;
     class EventSource;
@@ -41,4 +41,4 @@ namespace QtFirebase
     };
 }
 
-#endif // QTFIREBASE_FIREBASE_P_H
+#endif // CUTEFIRE_FIREBASE_P_H

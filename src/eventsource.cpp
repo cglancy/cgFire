@@ -4,7 +4,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 
-namespace QtFirebase
+namespace CuteFire
 {
 
 EventSource::EventSource(QObject *parent) :
