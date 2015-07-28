@@ -19,6 +19,7 @@ private slots:
     void testSetAndOnce();
     void testQuery();
     void testListen();
+    void testEventSource();
 
 private:
     QUrl firebaseUrl;

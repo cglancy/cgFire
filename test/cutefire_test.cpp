@@ -2,6 +2,7 @@
 #include <firebase.h>
 #include <query.h>
 #include <tokengenerator.h>
+#include <eventsource.h>
 
 #include <QTest>
 #include <QSharedPointer>
@@ -184,4 +185,19 @@ void CuteFireTest::testListen()
     QVERIFY(watchSpy.count() == 2);
 }
 
+void CuteFireTest::testEventSource()
+{
+    QSharedPointer<EventSource> eventSource = QSharedPointer<EventSource>(new EventSource());
+    QSignalSpy redirectSpy(eventSource.data(), &EventSource::redirected);
+    QSignalSpy openedSpy(eventSource.data(), &EventSource::opened);
+    QSignalSpy closedSpy(eventSource.data(), &EventSource::closed);
 
+    QUrl sourceUrl(firebaseUrl.toString() + "test.json");
+    eventSource->open(sourceUrl, Firebase::networkAccessManager());
+
+    QVERIFY(redirectSpy.wait(5000));
+    QVERIFY(openedSpy.wait(5000));
+
+    eventSource->close();
+    QVERIFY(closedSpy.wait(5000));
+}

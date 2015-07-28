@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QNetworkReply>
 #include <QSslError>
+#include "cutefire.h"
 
 class QString;
 class QVariant;
@@ -13,7 +14,7 @@ class QNetworkAccessManager;
 namespace CuteFire
 {
 
-    class EventSource : public QObject
+    class CUTEFIRE_API EventSource : public QObject
     {
         Q_OBJECT
     public:
@@ -56,6 +57,7 @@ namespace CuteFire
         State _state;
         QUrl _url;
         QNetworkAccessManager *_nam;
+        QNetworkReply *_reply;
     };
 
 }

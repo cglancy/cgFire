@@ -9,7 +9,8 @@ namespace CuteFire
 
 EventSource::EventSource(QObject *parent) :
     QObject(parent),
-    _state(Closed)
+    _state(Closed),
+    _reply(0)
 {
 }
 
@@ -20,65 +21,78 @@ void EventSource::open(const QUrl &url, QNetworkAccessManager *nam)
 
     QNetworkRequest request(url);
     request.setRawHeader("Accept", "text/event-stream");
-    QNetworkReply *reply = nam->get(request);
+    _reply = nam->get(request);
 
-    connect(reply, &QNetworkReply::readyRead, this, &EventSource::readyRead);
-    connect(reply, &QNetworkReply::finished, this, &EventSource::finished);
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(errorCode(QNetworkReply::NetworkError)));
-    connect(reply, &QNetworkReply::sslErrors, this, &EventSource::sslErrors);
+    connect(_reply, &QNetworkReply::readyRead, this, &EventSource::readyRead);
+    connect(_reply, &QNetworkReply::finished, this, &EventSource::finished);
+    connect(_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(errorCode(QNetworkReply::NetworkError)));
+    connect(_reply, &QNetworkReply::sslErrors, this, &EventSource::sslErrors);
 
     _state = Connecting;
 }
 
 void EventSource::close()
 {
-    _state = Closing;
+    if (_state == Opened || _state == Connecting)
+    {
+        _state = Closing;
+        if (_reply)
+            _reply->abort();
+    }
 }
 
 void EventSource::finished()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    Q_ASSERT(_reply == reply);
+
     if (reply)
     {
         QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
         if (!redirectUrl.isEmpty() && _url != redirectUrl)
         {
-            qDebug() << "redirected to " << redirectUrl;
+            qDebug() << "EventSource: redirected to " << redirectUrl;
             emit redirected();
+            reply->deleteLater();
             open(redirectUrl, _nam);
+            return;
         }
         else if (_state == Closing)
         {
             _state = Closed;
+            qDebug() << "EventSource: closed";
             emit closed();
         }
 
         reply->deleteLater();
+        _reply = 0;
     }
 }
 
 void EventSource::readyRead()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
     if (reply)
     {
-        if (_state == Connecting)
-        {
-            _state = Opened;
-            emit opened();
-        }
-
         QByteArray line = reply->readLine();
         if (!line.isEmpty())
         {
             QByteArray eventStr = eventValue(line);
-            qDebug() << "Event = " << eventStr;
+            qDebug() << "EventSource: Event = " << eventStr;
+
+            if (!eventStr.isEmpty() && _state == Connecting)
+            {
+                _state = Opened;
+                qDebug() << "EventSource: opened";
+                emit opened();
+            }
 
             line = reply->readLine();
             if (!line.isEmpty())
             {
                 QByteArray data = eventValue(line);
-                qDebug() << "Data = " << data;
+                qDebug() << "EventSource: Data = " << data;
                 QJsonDocument doc = QJsonDocument::fromJson(data);
                 QVariantMap eventMap = doc.toVariant().toMap();
                 QString path = eventMap["path"].toString();
@@ -112,9 +126,6 @@ void EventSource::readyRead()
 
         // read all data remaining
         reply->readAll();
-
-        if (_state == Closing)
-            reply->close();
     }
 }
 
@@ -131,7 +142,7 @@ void EventSource::errorCode(QNetworkReply::NetworkError code)
 
 void EventSource::sslErrors(const QList<QSslError> &errors)
 {
-    errors;
+    Q_UNUSED(errors);
 }
 
 QByteArray EventSource::eventValue(const QByteArray &line) const
