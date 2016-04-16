@@ -15,7 +15,7 @@ namespace CuteFire
         TokenGenerator(const QByteArray &secret);
         ~TokenGenerator();
 
-        QByteArray createToken(const QVariantMap &data, QVariantMap &options = QVariantMap());
+        QByteArray createToken(const QVariantMap &data, QVariantMap &options);
 
         QVariantMap payload(const QByteArray &token);
         bool isValid(const QByteArray &token);
