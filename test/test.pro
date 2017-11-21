@@ -1,24 +1,24 @@
 QT       += core testlib network
 QT       -= gui
 
-TARGET = firebase_test
+TARGET = TestCuteFire
 CONFIG   += testcase 
 
 TEMPLATE = app
 
 SOURCES += \
-    cutefire_test.cpp
+    testcutefire.cpp
 
-HEADERS += \
-    cutefire_test.h
+HEADERS += firebasesecret.h \
+    testcutefire.h
 
 INCLUDEPATH += ../src
 
 CONFIG(debug, debug|release) {
-    LIBS += -L../src/debug -lCuteFire0
-    PRE_TARGETDEPS += ../src/debug/CuteFire0.dll
+    LIBS += -L./debug -lCuteFire0
+    PRE_TARGETDEPS += ./debug/CuteFire0.dll
 }
 else {
-    LIBS += -L../src/release -lCuteFire0
-    PRE_TARGETDEPS += ../src/release/CuteFire0.dll
+    LIBS += -L./release -lCuteFire0
+    PRE_TARGETDEPS += ./release/CuteFire0.dll
 }

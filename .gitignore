@@ -127,3 +127,9 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+test/firebasesecret.h
+build/.qmake.stash
+build/target_wrapper.bat
+build/CuteFire.VC.db
+*.opendb
+build/CuteFire_resource.rc

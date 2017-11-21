@@ -1,15 +1,16 @@
-#ifndef CUTEFIRE_TEST_H
-#define CUTEFIRE_TEST_H
+#ifndef TESTCUTEFIRE_H
+#define TESTCUTEFIRE_H
 
 #include <QObject>
 #include <QByteArray>
 #include <QUrl>
 
-class CuteFireTest : public QObject
+class TestCuteFire : public QObject
 {
     Q_OBJECT
 private slots:
     void initTestCase();
+    void cleanupTestCase();
 
     void testAccessors();
     void testReferences();
@@ -26,4 +27,4 @@ private:
     QByteArray firebaseSecret;
 };
 
-#endif // CUTEFIRE_TEST_H
+#endif // TESTCUTEFIRE_H

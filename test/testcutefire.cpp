@@ -1,77 +1,78 @@
-#include "cutefire_test.h"
-#include <firebase.h>
-#include <query.h>
-#include <tokengenerator.h>
-#include <eventsource.h>
+#include "testcutefire.h"
+#include "firebasesecret.h"
+#include "firebase.h"
+#include "query.h"
+#include "tokengenerator.h"
+#include "eventsource.h"
 
 #include <QTest>
 #include <QSharedPointer>
 #include <QSignalSpy>
 #include <QDebug>
 
-#define WEATHER_URL "https://publicdata-weather.firebaseio.com"
 
 using namespace CuteFire;
 
+QTEST_MAIN(TestCuteFire)
 
-QTEST_MAIN(CuteFireTest)
-
-void CuteFireTest::initTestCase()
+void TestCuteFire::initTestCase()
 {
-    // verify environment variables
-    QByteArray firebaseUrlStr = qgetenv("FIREBASE_URL");
+    QByteArray firebaseUrlStr = FIREBASE_URL;
     QVERIFY(!firebaseUrlStr.isEmpty());
     firebaseUrl.setUrl(firebaseUrlStr);
     QVERIFY(firebaseUrl.isValid());
     QVERIFY(firebaseUrl.scheme() == "https");
 
-    firebaseSecret = qgetenv("FIREBASE_SECRET");
+    firebaseSecret = FIREBASE_SECRET;
     QVERIFY(!firebaseSecret.isEmpty());
 }
 
-void CuteFireTest::testAccessors()
+void TestCuteFire::cleanupTestCase()
 {
-    QString urlStr = QString(WEATHER_URL) + "/portland";
+}
+
+void TestCuteFire::testAccessors()
+{
+    QString urlStr = FIREBASE_URL + QString("/test");
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(urlStr)));
     QVERIFY(testRef->url().url() == urlStr);
 
-    QVERIFY(testRef->key() == "portland");
+    QVERIFY(testRef->key() == "test");
 }
 
-void CuteFireTest::testReferences()
+void TestCuteFire::testReferences()
 {
-    QString urlStr = QString(WEATHER_URL) + "/portland";
+    QString urlStr = FIREBASE_URL + QString("/test");
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(urlStr)));
     QVERIFY(testRef->url().toString() == urlStr);
 
     Firebase *root = testRef->root();
-    QVERIFY(root->url().toString() == WEATHER_URL);
+    QVERIFY(root->url().toString() == FIREBASE_URL);
 
     QVERIFY(root->root() == root);
     QVERIFY(root->parent() == 0);
 
     Firebase *parent = testRef->parent();
-    QVERIFY(parent->url().toString() == WEATHER_URL);
+    QVERIFY(parent->url().toString() == FIREBASE_URL);
 
-    Firebase *child = testRef->child("currently");
-    QVERIFY(child->url().toString() == urlStr + "/currently");
+    Firebase *child = testRef->child("test");
+    QVERIFY(child->url().toString() == urlStr + "/test");
 }
 
-void CuteFireTest::testRead()
+void TestCuteFire::testRead()
 {
-    QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(WEATHER_URL)));
-    Firebase *temp = testRef->child("portland/currently/temperature");
+    QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(FIREBASE_URL)));
+    Firebase *temp = testRef->child("test/value1");
 
     temp->once();
     QSignalSpy getSpy(temp, &Firebase::onceFinished);
     QVERIFY(getSpy.wait(5000));
     QList<QVariant> arguments = getSpy.takeFirst();
     QVERIFY(arguments.count() == 1);
-
-    qDebug() << "Temperature in Portland is " << arguments.at(0).toString();
+    QCOMPARE(42, arguments.at(0).toInt());
 }
 
-void CuteFireTest::testTokenGenerator()
+void TestCuteFire::testTokenGenerator()
 {
     TokenGenerator tokenGenerator(firebaseSecret);
 
@@ -95,10 +96,10 @@ void CuteFireTest::testTokenGenerator()
     QVERIFY(payload["debug"] == true);
 }
 
-void CuteFireTest::testAuth()
+void TestCuteFire::testAuth()
 {
     QVariantMap data;
-    data["uid"] = "custom:1";
+    data["uid"] = "WSCXoL8KW6PELBfmdeBymsX2NKt2";
 
     QVariantMap options;
     options["admin"] = true;
@@ -108,7 +109,7 @@ void CuteFireTest::testAuth()
     QByteArray token = tokenGenerator.createToken(data, options);
 
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
-    Firebase *testRef = rootRef->child("test");
+    Firebase *testRef = rootRef->child("test/pirate");
     testRef->authWithCustomToken(token);
 
     QVariantMap value;
@@ -122,44 +123,49 @@ void CuteFireTest::testAuth()
     testRef->unauth();
 }
 
-void CuteFireTest::testSetAndOnce()
+void TestCuteFire::testSetAndOnce()
 {
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
-    Firebase *testRef = rootRef->child("test");
+    Firebase *testRef = rootRef->child("test/users");
 
+    QVariantMap user;
     QVariantMap value;
     value["first"] = "Jack";
     value["last"] = "Sparrow";
 
-    testRef->set(value);
+    user["pirate1"] = value;
+
+    testRef->set(user);
     QSignalSpy setSpy(testRef, &Firebase::setFinished);
     QVERIFY(setSpy.wait(5000));
 
-    testRef->once();
-    QSignalSpy onceSpy(testRef, &Firebase::onceFinished);
+    Firebase *userRef = testRef->child("pirate1");
+
+    userRef->once();
+    QSignalSpy onceSpy(userRef, &Firebase::onceFinished);
     QVERIFY(onceSpy.wait(5000));
     QList<QVariant> arguments = onceSpy.takeFirst();
     QVERIFY(arguments.count() == 1);
     QVERIFY(arguments.at(0) == value);
 
-    testRef->set(true);
-    QVERIFY(setSpy.wait(5000));
+    //testRef->set(true);
+    //QVERIFY(setSpy.wait(5000));
 
-    testRef->once();
-    QVERIFY(onceSpy.wait(5000));
-    arguments = onceSpy.takeFirst();
-    QVERIFY(arguments.count() == 1);
-    QVERIFY(arguments.at(0).toBool() == true);
+    //testRef->once();
+    //QVERIFY(onceSpy.wait(5000));
+    //arguments = onceSpy.takeFirst();
+    //QVERIFY(arguments.count() == 1);
+    //QVERIFY(arguments.at(0).toBool() == true);
 }
 
-void CuteFireTest::testQuery()
+void TestCuteFire::testQuery()
 {
 }
 
-void CuteFireTest::testListen()
+void TestCuteFire::testListen()
 {
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
-    Firebase *testRef = rootRef->child("test");
+    Firebase *testRef = rootRef->child("test/people");
     testRef->listen();
 
     // wait for redirect
@@ -185,14 +191,14 @@ void CuteFireTest::testListen()
     QVERIFY(watchSpy.count() == 2);
 }
 
-void CuteFireTest::testEventSource()
+void TestCuteFire::testEventSource()
 {
     QSharedPointer<EventSource> eventSource = QSharedPointer<EventSource>(new EventSource());
     QSignalSpy redirectSpy(eventSource.data(), &EventSource::redirected);
     QSignalSpy openedSpy(eventSource.data(), &EventSource::opened);
     QSignalSpy closedSpy(eventSource.data(), &EventSource::closed);
 
-    QUrl sourceUrl(firebaseUrl.toString() + "test.json");
+    QUrl sourceUrl(firebaseUrl.toString() + "listen.json");
     eventSource->open(sourceUrl, Firebase::networkAccessManager());
 
     QVERIFY(redirectSpy.wait(5000));
