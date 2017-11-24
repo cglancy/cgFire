@@ -15,10 +15,10 @@ HEADERS += firebasesecret.h \
 INCLUDEPATH += ../src
 
 CONFIG(debug, debug|release) {
-    LIBS += -L./debug -lCuteFire0
-    PRE_TARGETDEPS += ./debug/CuteFire0.dll
+    LIBS += -L../src/debug -lCuteFire0
+    PRE_TARGETDEPS += ../src/debug/CuteFire0.dll
 }
 else {
-    LIBS += -L./release -lCuteFire0
-    PRE_TARGETDEPS += ./release/CuteFire0.dll
+    LIBS += -L../src/release -lCuteFire0
+    PRE_TARGETDEPS += ../src/release/CuteFire0.dll
 }
