@@ -19,7 +19,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 
-namespace CuteFire
+namespace cg
 {
 
 EventSource::EventSource(QObject *parent) :

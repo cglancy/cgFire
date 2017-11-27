@@ -25,7 +25,7 @@
 #include <QBuffer>
 #include <QUrlQuery>
 
-namespace CuteFire {
+namespace cg {
 
 QNetworkAccessManager * Firebase::networkAccessManager()
 {

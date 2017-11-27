@@ -13,19 +13,19 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef CUTEFIRE_TOKENGENERATOR_H
-#define CUTEFIRE_TOKENGENERATOR_H
+#ifndef CGFIRE_TOKENGENERATOR_H
+#define CGFIRE_TOKENGENERATOR_H
 #pragma once
 
-#include "cutefire.h"
+#include "cgfire.h"
 #include <QByteArray>
 #include <QVariant>
 
-namespace CuteFire
+namespace cg
 {
     class TokenGeneratorPrivate;
 
-    class CUTEFIRE_API TokenGenerator
+    class CGFIRE_API TokenGenerator
     {
     public:
         TokenGenerator(const QByteArray &secret);
@@ -43,4 +43,4 @@ namespace CuteFire
     };
 }
 
-#endif // CUTEFIRE_TOKENGENERATOR_H
+#endif // CGFIRE_TOKENGENERATOR_H

@@ -1,13 +1,7 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2015-06-22T09:32:26
-#
-#-------------------------------------------------
+QT += core network
+QT -= gui
 
-QT       += core network
-QT       -= gui
-
-TARGET = CuteFire
+TARGET = cgFire
 CONFIG   += dll
 TEMPLATE = lib
 VERSION	= 0.1.1
@@ -25,7 +19,7 @@ HEADERS += \
     eventsource.h \
     tokengenerator.h \
     tokengenerator_p.h \
-    cutefire.h
+    cgfire.h
 
-DEFINES += CUTEFIRE_EXPORTS
+DEFINES += CGFIRE_EXPORTS
 

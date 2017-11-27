@@ -4,8 +4,8 @@ set QMAKESPEC=win32-msvc
 
 call "%VSDIR%\VC\vcvarsall.bat" x64
 
-%QTDIR%\bin\qmake.exe -tp vc -r ../../CuteFire.pro
+%QTDIR%\bin\qmake.exe -tp vc -r ../../cgFire.pro
 
 set PATH=%PATH%;%QTDIR%\bin;%~dp0\src\debug
 
-devenv CuteFire.sln
+devenv cgFire.sln

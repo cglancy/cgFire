@@ -13,24 +13,34 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef CUTEFIRE_H
-#define CUTEFIRE_H
+#ifndef CGFIRE_FIRETEST_H
+#define CGFIRE_FIRETEST_H
 #pragma once
 
-#include <QtGlobal>
+#include <QObject>
+#include <QByteArray>
+#include <QUrl>
 
-#ifdef Q_OS_WIN32
+class FireTest : public QObject
+{
+    Q_OBJECT
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
 
-#ifdef CUTEFIRE_EXPORTS
-#define CUTEFIRE_API __declspec(dllexport)
-#else
-#define CUTEFIRE_API __declspec(dllimport)
-#endif
+    void testAccessors();
+    void testReferences();
+    void testRead();
+    void testTokenGenerator();
+    void testAuth();
+    void testSetAndOnce();
+    void testQuery();
+    void testListen();
+    void testEventSource();
 
-#else
+private:
+    QUrl firebaseUrl;
+    QByteArray firebaseSecret;
+};
 
-#define CUTEFIRE_API __attribute__((visibility("default")))
-
-#endif
-
-#endif // CUTEFIRE_H
+#endif // CGFIRE_FIRETEST_H

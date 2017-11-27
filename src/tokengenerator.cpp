@@ -20,7 +20,7 @@
 #include <QJsonDocument>
 #include <QMessageAuthenticationCode>
 
-namespace CuteFire
+namespace cg
 {
 
 TokenGenerator::TokenGenerator(const QByteArray &secret)

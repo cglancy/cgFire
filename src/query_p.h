@@ -13,14 +13,14 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef CUTEFIRE_QUERY_P_H
-#define CUTEFIRE_QUERY_P_H
+#ifndef CGFIRE_QUERY_P_H
+#define CGFIRE_QUERY_P_H
 #pragma once
 
 #include <QObject>
 #include <QUrl>
 
-namespace CuteFire
+namespace cg
 {
     class Firebase;
     class Query;
@@ -84,4 +84,4 @@ namespace CuteFire
     };
 }
 
-#endif // CUTEFIRE_QUERY_P_H
+#endif // CGFIRE_QUERY_P_H

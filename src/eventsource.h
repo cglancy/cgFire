@@ -13,24 +13,24 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef CUTEFIRE_EVENTSOURCE_H
-#define CUTEFIRE_EVENTSOURCE_H
+#ifndef CGFIRE_EVENTSOURCE_H
+#define CGFIRE_EVENTSOURCE_H
 #pragma once
 
 #include <QObject>
 #include <QUrl>
 #include <QNetworkReply>
 #include <QSslError>
-#include "cutefire.h"
+#include "cgfire.h"
 
 class QString;
 class QVariant;
 class QNetworkAccessManager;
 
-namespace CuteFire
+namespace cg
 {
 
-    class CUTEFIRE_API EventSource : public QObject
+    class CGFIRE_API EventSource : public QObject
     {
         Q_OBJECT
     public:
@@ -78,4 +78,4 @@ namespace CuteFire
 
 }
 
-#endif // CUTEFIRE_EVENTSOURCE_H
+#endif // CGFIRE_EVENTSOURCE_H

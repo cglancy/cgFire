@@ -13,11 +13,11 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef CUTEFIRE_FIREBASE_H
-#define CUTEFIRE_FIREBASE_H
+#ifndef CGFIRE_FIREBASE_H
+#define CGFIRE_FIREBASE_H
 #pragma once
 
-#include "cutefire.h"
+#include "cgfire.h"
 #include <QObject>
 #include <QUrl>
 #include <QVariant>
@@ -25,12 +25,12 @@
 class QNetworkAccessManager;
 class QNetworkReply;
 
-namespace CuteFire
+namespace cg
 {
     class FirebasePrivate;
     class Query;
 
-    class CUTEFIRE_API Firebase : public QObject
+    class CGFIRE_API Firebase : public QObject
     {
         Q_OBJECT
     public:
@@ -92,4 +92,4 @@ namespace CuteFire
     };
 }
 
-#endif // CUTEFIRE_FIREBASE_H
+#endif // CGFIRE_FIREBASE_H

@@ -24,7 +24,7 @@
 #include <QJsonDocument>
 #include <QUrlQuery>
 
-namespace CuteFire
+namespace cg
 {
 
 Query::Query(Firebase *parent)

@@ -13,7 +13,7 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#include "testcutefire.h"
+#include "firetest.h"
 #include "firebasesecret.h"
 #include "firebase.h"
 #include "query.h"
@@ -26,11 +26,11 @@
 #include <QDebug>
 
 
-using namespace CuteFire;
+using namespace cg;
 
-QTEST_MAIN(TestCuteFire)
+QTEST_MAIN(FireTest)
 
-void TestCuteFire::initTestCase()
+void FireTest::initTestCase()
 {
     QByteArray firebaseUrlStr = FIREBASE_URL;
     QVERIFY(!firebaseUrlStr.isEmpty());
@@ -42,11 +42,11 @@ void TestCuteFire::initTestCase()
     QVERIFY(!firebaseSecret.isEmpty());
 }
 
-void TestCuteFire::cleanupTestCase()
+void FireTest::cleanupTestCase()
 {
 }
 
-void TestCuteFire::testAccessors()
+void FireTest::testAccessors()
 {
     QString urlStr = FIREBASE_URL + QString("/test");
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(urlStr)));
@@ -55,7 +55,7 @@ void TestCuteFire::testAccessors()
     QVERIFY(testRef->key() == "test");
 }
 
-void TestCuteFire::testReferences()
+void FireTest::testReferences()
 {
     QString urlStr = FIREBASE_URL + QString("/test");
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(urlStr)));
@@ -74,7 +74,7 @@ void TestCuteFire::testReferences()
     QVERIFY(child->url().toString() == urlStr + "/test");
 }
 
-void TestCuteFire::testRead()
+void FireTest::testRead()
 {
     QSharedPointer<Firebase> testRef = QSharedPointer<Firebase>(new Firebase(QUrl(FIREBASE_URL)));
     Firebase *temp = testRef->child("test/value1");
@@ -87,7 +87,7 @@ void TestCuteFire::testRead()
     QCOMPARE(42, arguments.at(0).toInt());
 }
 
-void TestCuteFire::testTokenGenerator()
+void FireTest::testTokenGenerator()
 {
     TokenGenerator tokenGenerator(firebaseSecret);
 
@@ -111,7 +111,7 @@ void TestCuteFire::testTokenGenerator()
     QVERIFY(payload["debug"] == true);
 }
 
-void TestCuteFire::testAuth()
+void FireTest::testAuth()
 {
     QVariantMap data;
     data["uid"] = "WSCXoL8KW6PELBfmdeBymsX2NKt2";
@@ -138,7 +138,7 @@ void TestCuteFire::testAuth()
     testRef->unauth();
 }
 
-void TestCuteFire::testSetAndOnce()
+void FireTest::testSetAndOnce()
 {
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
     Firebase *testRef = rootRef->child("test/users");
@@ -173,11 +173,11 @@ void TestCuteFire::testSetAndOnce()
     //QVERIFY(arguments.at(0).toBool() == true);
 }
 
-void TestCuteFire::testQuery()
+void FireTest::testQuery()
 {
 }
 
-void TestCuteFire::testListen()
+void FireTest::testListen()
 {
     QSharedPointer<Firebase> rootRef = QSharedPointer<Firebase>(new Firebase(firebaseUrl));
     Firebase *testRef = rootRef->child("test/people");
@@ -206,7 +206,7 @@ void TestCuteFire::testListen()
     QVERIFY(watchSpy.count() == 2);
 }
 
-void TestCuteFire::testEventSource()
+void FireTest::testEventSource()
 {
     QSharedPointer<EventSource> eventSource = QSharedPointer<EventSource>(new EventSource());
     QSignalSpy redirectSpy(eventSource.data(), &EventSource::redirected);
