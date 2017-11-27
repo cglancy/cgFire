@@ -13,36 +13,27 @@
 * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef CGFIRE_FIRETEST_H
-#define CGFIRE_FIRETEST_H
+#ifndef CGFIRE_PUSIDGENERATOR_P_H
+#define CGFIRE_PUSIDGENERATOR_P_H
 #pragma once
 
-#include <QObject>
 #include <QByteArray>
-#include <QUrl>
 
-class FireTest : public QObject
+namespace cg
 {
-    Q_OBJECT
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
+    class PushIdGeneratorPrivate
+    {
+    public:
+        PushIdGeneratorPrivate();
 
-    void testAccessors();
-    void testReferences();
-    void testRead();
-    void testAuth();
-    void testSetAndOnce();
-    void testQuery();
-    void testListen();
-    void testEventSource();
+        char randomChar64();
 
-    void testTokenGenerator();
-    void testPushIdGenerator();
+        qint64 lastTimestamp;
+        char lastRandomChars[12];
+        static const QByteArray pushChars;
 
-private:
-    QUrl firebaseUrl;
-    QByteArray firebaseSecret;
-};
+        Q_DISABLE_COPY(PushIdGeneratorPrivate)
+    };
+}
 
-#endif // CGFIRE_FIRETEST_H
+#endif // CGFIRE_PUSIDGENERATOR_P_H

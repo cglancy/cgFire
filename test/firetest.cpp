@@ -19,10 +19,12 @@
 #include "query.h"
 #include "tokengenerator.h"
 #include "eventsource.h"
+#include "pushidgenerator.h"
 
 #include <QTest>
 #include <QSharedPointer>
 #include <QSignalSpy>
+#include <QThread>
 #include <QDebug>
 
 
@@ -85,30 +87,6 @@ void FireTest::testRead()
     QList<QVariant> arguments = getSpy.takeFirst();
     QVERIFY(arguments.count() == 1);
     QCOMPARE(42, arguments.at(0).toInt());
-}
-
-void FireTest::testTokenGenerator()
-{
-    TokenGenerator tokenGenerator(firebaseSecret);
-
-    QVariantMap data;
-    data["uid"] = "custom:1";
-
-    QVariantMap options;
-    options["admin"] = true;
-    options["debug"] = true;
-
-    QByteArray token = tokenGenerator.createToken(data, options);
-    qDebug() << "token = " << token;
-    qDebug() << "verify with http://jwt.io";
-
-    QVERIFY(tokenGenerator.isValid(token));
-
-    QVariantMap payload = tokenGenerator.payload(token);
-    QVariantMap dmap = payload["d"].toMap();
-    QVERIFY(dmap["uid"] == "custom:1");
-    QVERIFY(payload["admin"] == true);
-    QVERIFY(payload["debug"] == true);
 }
 
 void FireTest::testAuth()
@@ -221,4 +199,58 @@ void FireTest::testEventSource()
 
     eventSource->close();
     QVERIFY(closedSpy.wait(5000));
+}
+
+void FireTest::testTokenGenerator()
+{
+    TokenGenerator tokenGenerator(firebaseSecret);
+
+    QVariantMap data;
+    data["uid"] = "custom:1";
+
+    QVariantMap options;
+    options["admin"] = true;
+    options["debug"] = true;
+
+    QByteArray token = tokenGenerator.createToken(data, options);
+    qDebug() << "token = " << token;
+    qDebug() << "verify with http://jwt.io";
+
+    QVERIFY(tokenGenerator.isValid(token));
+
+    QVariantMap payload = tokenGenerator.payload(token);
+    QVariantMap dmap = payload["d"].toMap();
+    QVERIFY(dmap["uid"] == "custom:1");
+    QVERIFY(payload["admin"] == true);
+    QVERIFY(payload["debug"] == true);
+}
+
+void FireTest::testPushIdGenerator()
+{
+    PushIdGenerator pig;
+    QByteArray id1, id2, id3, id4, id5, id6, id7;
+
+    id1 = pig.generatePushId();
+    id2 = pig.generatePushId();
+    id3 = pig.generatePushId();
+    id4 = pig.generatePushId();
+    QVERIFY(id1 < id2 && id2 < id3 && id3 < id4);
+
+    QThread::sleep(1);
+    id5 = pig.generatePushId();
+    id6 = pig.generatePushId();
+    QVERIFY(id4 < id5 && id5 < id6);
+
+    QThread::sleep(1);
+    id6 = pig.generatePushId();
+    id7 = pig.generatePushId();
+    QVERIFY(id5 < id6 && id6 < id7);
+
+    QThread::sleep(1);
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    QByteArray id = pig.generatePushId();
+    qint64 timestamp = pig.timestamp(id);
+    QCOMPARE(timestamp, now);
+
+    // that'll do pig, that'll do
 }

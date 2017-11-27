@@ -9,6 +9,7 @@ VERSION	= 0.1.1
 SOURCES += firebase.cpp \
     query.cpp \
     eventsource.cpp \
+	pushidgenerator.cpp \
     tokengenerator.cpp
 
 HEADERS += \
@@ -17,6 +18,8 @@ HEADERS += \
     query.h \
     query_p.h \
     eventsource.h \
+	pushidgenerator.h \
+	pushidgenerator_p.h \
     tokengenerator.h \
     tokengenerator_p.h \
     cgfire.h

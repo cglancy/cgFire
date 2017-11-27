@@ -9,3 +9,4 @@ build/windows/test
 build/windows/CuteData.sln
 build/windows/CuteFire.sln
 test/firebasesecret.h
+build/windows/cgFire.sln
