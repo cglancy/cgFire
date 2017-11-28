@@ -31,17 +31,13 @@ namespace cg
     class FirebasePrivate : public QObject
     {
         Q_OBJECT
+        Q_DISABLE_COPY(FirebasePrivate)
+        Q_DECLARE_PUBLIC(Firebase)
+        Firebase * const q_ptr;
+
     public:
         FirebasePrivate(Firebase *firebase, const QUrl &url);
 
-    public slots:
-        void onceFinished();
-        void setFinished();
-        void updateFinished();
-        void pushFinished();
-        void removeFinished();
-
-    public:
         QUrl restUrl() const;
         QUrl priorityUrl() const;
         QByteArray convert(const QVariant &value);
@@ -50,10 +46,13 @@ namespace cg
         static QByteArray authToken;
         QUrl url;
         EventSource *eventSource;
-
-        Firebase * const q_ptr;
-        Q_DECLARE_PUBLIC(Firebase)
-        Q_DISABLE_COPY(FirebasePrivate)
+        
+    public slots:
+        void onceFinished();
+        void setFinished();
+        void updateFinished();
+        void pushFinished();
+        void removeFinished();
     };
 }
 

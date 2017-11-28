@@ -31,6 +31,19 @@ namespace cg
     class CGFIRE_API Query : public QObject
     {
         Q_OBJECT
+        Q_DISABLE_COPY(Query)
+        Q_DECLARE_PRIVATE(Query)
+        QueryPrivate * const d_ptr;
+
+        friend class Firebase;
+        Query(Firebase *parent);
+        Query(Query *query);
+
+        static Query * orderByKey(Firebase *firebase);
+        static Query * orderByPriority(Firebase *firebase);
+        static Query * orderByValue(Firebase *firebase);
+        static Query * orderByChild(Firebase *firebase, const QString &child);
+
     public:
         Firebase * firebase() const;
 
@@ -51,21 +64,6 @@ namespace cg
         void valueUpdated(const QVariant &value);
         void childChanged(const QString &path, const QVariant &value);
         void childUpdated(const QString &path, const QVariant &value);
-
-    private:
-        friend class Firebase;
-        Query(Firebase *parent);
-        Query(Query *query);
-
-        static Query * orderByKey(Firebase *firebase);
-        static Query * orderByPriority(Firebase *firebase);
-        static Query * orderByValue(Firebase *firebase);
-        static Query * orderByChild(Firebase *firebase, const QString &child);
-
-    private:
-        QueryPrivate * const d_ptr;
-        Q_DECLARE_PRIVATE(Query)
-        Q_DISABLE_COPY(Query)
     };
 }
 

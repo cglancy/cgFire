@@ -29,6 +29,10 @@ namespace cg
     class QueryPrivate : public QObject
     {
         Q_OBJECT
+        Q_DISABLE_COPY(QueryPrivate)
+        Q_DECLARE_PUBLIC(Query)
+        Query * const q_ptr;
+
     public:
         enum Order
         {
@@ -54,10 +58,6 @@ namespace cg
             EqualToRange    = 0x04
         };
 
-
-    public slots:
-        void onceFinished();
-
     public:
         QueryPrivate(Query *query);
         void init(Order order, const QString &param);
@@ -78,9 +78,8 @@ namespace cg
         QString limitParam;
         EventSource *eventSource;
 
-        Query * const q_ptr;
-        Q_DECLARE_PUBLIC(Query)
-        Q_DISABLE_COPY(QueryPrivate)
+    public slots:
+        void onceFinished();
     };
 }
 

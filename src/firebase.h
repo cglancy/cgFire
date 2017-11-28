@@ -33,9 +33,9 @@ namespace cg
     class CGFIRE_API Firebase : public QObject
     {
         Q_OBJECT
-    public:
-        static QNetworkAccessManager * networkAccessManager();
-        static void setNetworkAccessManager(QNetworkAccessManager *nam);
+        Q_DISABLE_COPY(Firebase)
+        Q_DECLARE_PRIVATE(Firebase)
+        FirebasePrivate * const d_ptr;
 
     public:
         Firebase(const QUrl &url, QObject *parent = 0);
@@ -85,10 +85,9 @@ namespace cg
         void childChanged(const QString &path, const QVariant &value);
         void childUpdated(const QString &path, const QVariant &value);
 
-    private:
-        FirebasePrivate * const d_ptr;
-        Q_DECLARE_PRIVATE(Firebase)
-        Q_DISABLE_COPY(Firebase)
+    public:
+        static QNetworkAccessManager * networkAccessManager();
+        static void setNetworkAccessManager(QNetworkAccessManager *nam);
     };
 }
 

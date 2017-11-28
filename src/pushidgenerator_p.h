@@ -23,6 +23,8 @@ namespace cg
 {
     class PushIdGeneratorPrivate
     {
+        Q_DISABLE_COPY(PushIdGeneratorPrivate)
+
     public:
         PushIdGeneratorPrivate();
 
@@ -31,8 +33,6 @@ namespace cg
         qint64 lastTimestamp;
         char lastRandomChars[12];
         static const QByteArray pushChars;
-
-        Q_DISABLE_COPY(PushIdGeneratorPrivate)
     };
 }
 

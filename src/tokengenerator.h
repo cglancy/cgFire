@@ -27,6 +27,10 @@ namespace cg
 
     class CGFIRE_API TokenGenerator
     {
+        Q_DECLARE_PRIVATE(TokenGenerator)
+        Q_DISABLE_COPY(TokenGenerator)
+        TokenGeneratorPrivate * const d_ptr;
+
     public:
         TokenGenerator(const QByteArray &secret);
         ~TokenGenerator();
@@ -35,11 +39,6 @@ namespace cg
 
         QVariantMap payload(const QByteArray &token);
         bool isValid(const QByteArray &token);
-
-    private:
-        TokenGeneratorPrivate * const d_ptr;
-        Q_DECLARE_PRIVATE(TokenGenerator)
-        Q_DISABLE_COPY(TokenGenerator)
     };
 }
 

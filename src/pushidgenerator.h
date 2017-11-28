@@ -26,16 +26,15 @@ namespace cg
 
     class CGFIRE_API PushIdGenerator
     {
+        Q_DISABLE_COPY(PushIdGenerator)
+        Q_DECLARE_PRIVATE(PushIdGenerator)
+        PushIdGeneratorPrivate * const d_ptr;
+
     public:
         PushIdGenerator();
 
         QByteArray generatePushId();
         qint64 timestamp(const QByteArray &id) const;
-
-    private:
-        PushIdGeneratorPrivate * const d_ptr;
-        Q_DECLARE_PRIVATE(PushIdGenerator)
-        Q_DISABLE_COPY(PushIdGenerator)
     };
 }
 

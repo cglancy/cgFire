@@ -24,6 +24,8 @@ namespace cg
 {
     class TokenGeneratorPrivate
     {
+        Q_DISABLE_COPY(TokenGeneratorPrivate)
+
     public:
         TokenGeneratorPrivate(const QByteArray &secret);
 
@@ -39,8 +41,6 @@ namespace cg
         static const int version;
         static const char tokenSeparator;
         QByteArray secret;
-
-        Q_DISABLE_COPY(TokenGeneratorPrivate)
     };
 }
 
